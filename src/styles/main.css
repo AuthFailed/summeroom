@@ -1,0 +1,1279 @@
+  :root {
+    --cream: #f3efe5;
+    --cream-deep: #e8e1ce;
+    --ink: #1a2419;
+    --moss: #2d4a2b;
+    --sage: #6b8063;
+    --terracotta: #b8542e;
+    --ochre: #c89a3a;
+    --paper: #faf7ef;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* Зернистая текстура на всём фоне */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.15 0 0 0 0 0.1 0 0 0 0.25 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .mono { font-family: 'DM Mono', monospace; font-weight: 400; letter-spacing: 0.02em; }
+
+  /* ======= ШАПКА ======= */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--cream);
+    border-bottom: 1px solid var(--ink);
+    padding: 0.9rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.45rem;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    line-height: 1;
+  }
+
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+  }
+
+  .logo .leto {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--moss);
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2.2rem;
+  }
+
+  nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-family: 'DM Mono', monospace;
+    position: relative;
+    padding-bottom: 3px;
+    transition: color 0.3s;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--moss);
+    transition: width 0.4s ease;
+  }
+
+  nav a:hover { color: var(--moss); }
+  nav a:hover::after { width: 100%; }
+
+  .cart-btn {
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    padding: 0.7rem 1.3rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .cart-btn:hover { background: var(--moss); transform: translateY(-1px); }
+  .cart-count {
+    background: var(--terracotta);
+    color: var(--cream);
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 0.68rem;
+  }
+
+  /* ======= ГЕРОЙ ======= */
+  .hero {
+    position: relative;
+    padding: 3rem 2rem 5rem;
+    min-height: 88vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-meta {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--sage);
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .hero-meta span::before {
+    content: '●';
+    margin-right: 0.5em;
+    color: var(--terracotta);
+  }
+
+  .hero-text { position: relative; z-index: 3; }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--moss);
+  }
+
+  h1.hero-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(3.5rem, 8vw, 7.5rem);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    margin-bottom: 2rem;
+  }
+
+  h1.hero-title .italic {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--moss);
+  }
+
+  h1.hero-title .ampersand {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--terracotta);
+    font-size: 0.9em;
+    display: inline-block;
+    transform: translateY(0.05em);
+  }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 440px;
+    margin-bottom: 2.5rem;
+    color: #3a4238;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    padding: 1.1rem 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.3s;
+  }
+
+  .btn-primary:hover { background: var(--moss); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(45,74,43,0.25); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    padding: 1.1rem 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.3s;
+  }
+
+  .btn-ghost:hover { background: var(--ink); color: var(--cream); }
+
+  /* Иллюстрация — окно с солнцем и растением на подоконнике */
+  .hero-visual {
+    position: relative;
+    height: 560px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .window-frame {
+    position: relative;
+    width: 420px;
+    height: 520px;
+    background: linear-gradient(180deg, #f8e9c4 0%, #f3d794 40%, #e8b87a 70%, #c89a3a 100%);
+    border: 8px solid var(--ink);
+    box-shadow:
+      0 40px 80px -20px rgba(26, 36, 25, 0.4),
+      inset 0 0 0 4px var(--cream);
+    overflow: hidden;
+  }
+
+  /* Крест-рама окна */
+  .window-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 6px;
+    height: 72%;
+    background: var(--ink);
+    transform: translateX(-50%);
+    z-index: 3;
+  }
+  .window-frame::after {
+    content: '';
+    position: absolute;
+    top: 36%;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: var(--ink);
+    z-index: 3;
+  }
+
+  /* Солнце */
+  .sun {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, #fff5d4, #ffd36e 50%, #e89b2a);
+    top: 14%;
+    right: 14%;
+    box-shadow:
+      0 0 60px rgba(255, 200, 80, 0.6),
+      0 0 120px rgba(255, 180, 60, 0.3);
+    animation: sun-float 10s ease-in-out infinite;
+    z-index: 2;
+  }
+
+  @keyframes sun-float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-15px, 10px); }
+  }
+
+  /* Облака — проплывают */
+  .cloud {
+    position: absolute;
+    background: var(--cream);
+    border-radius: 100px;
+    opacity: 0.7;
+    z-index: 2;
+  }
+
+  .cloud-1 {
+    width: 90px;
+    height: 22px;
+    top: 22%;
+    left: -30%;
+    animation: cloud-drift 18s linear infinite;
+  }
+
+  .cloud-2 {
+    width: 60px;
+    height: 16px;
+    top: 18%;
+    left: -60%;
+    animation: cloud-drift 26s linear infinite 4s;
+    opacity: 0.5;
+  }
+
+  @keyframes cloud-drift {
+    from { transform: translateX(0); }
+    to { transform: translateX(700px); }
+  }
+
+  /* Птицы-галочки */
+  .birds {
+    position: absolute;
+    top: 30%;
+    left: 20%;
+    width: 60px;
+    height: 30px;
+    z-index: 2;
+    animation: birds-fly 22s linear infinite;
+    opacity: 0.6;
+  }
+
+  @keyframes birds-fly {
+    0% { transform: translate(0, 0); opacity: 0; }
+    10% { opacity: 0.6; }
+    80% { opacity: 0.6; }
+    100% { transform: translate(300px, -40px); opacity: 0; }
+  }
+
+  /* Подоконник */
+  .sill {
+    position: absolute;
+    bottom: 18%;
+    left: -6%;
+    right: -6%;
+    height: 22px;
+    background: linear-gradient(180deg, #5a4a36 0%, #3d3024 100%);
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    z-index: 5;
+    box-shadow: 0 4px 0 var(--ink);
+  }
+
+  /* Кашпо на подоконнике */
+  .sill-pot {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    width: 170px;
+    height: 145px;
+    transform: translateX(-50%);
+    z-index: 6;
+    animation: pot-bob 7s ease-in-out infinite;
+  }
+
+  @keyframes pot-bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-3px); }
+  }
+
+  .sill-pot svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: drop-shadow(0 12px 20px rgba(26, 36, 25, 0.35));
+  }
+
+  /* Листья растения, растущие из кашпо */
+  .plant-leaves {
+    position: absolute;
+    bottom: 34%;
+    left: 50%;
+    width: 300px;
+    height: 340px;
+    transform: translateX(-50%);
+    z-index: 7;
+  }
+
+  .plant-leaves svg {
+    position: absolute;
+    transform-origin: center bottom;
+  }
+
+  .pl-1 { width: 145px; left: 50px; bottom: -15px; animation: leaf-sway 5s ease-in-out infinite; }
+  .pl-2 { width: 135px; left: 115px; bottom: 5px; animation: leaf-sway 6s ease-in-out infinite reverse; }
+  .pl-3 { width: 105px; left: 175px; bottom: -10px; animation: leaf-sway 7s ease-in-out infinite; }
+  .pl-4 { width: 110px; left: 10px; bottom: 25px; animation: leaf-sway 8s ease-in-out infinite reverse; }
+  .pl-5 { width: 80px; left: 210px; bottom: 40px; animation: leaf-sway 6.5s ease-in-out infinite; }
+
+  @keyframes leaf-sway {
+    0%, 100% { transform: rotate(var(--r, 0deg)) translateY(0); }
+    50% { transform: rotate(calc(var(--r, 0deg) + 5deg)) translateY(-4px); }
+  }
+
+  /* Световые лучи от солнца */
+  .ray {
+    position: absolute;
+    background: linear-gradient(180deg, rgba(255, 220, 120, 0.35), transparent);
+    transform-origin: top center;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .ray-1 { width: 3px; height: 380px; top: 18%; right: 24%; transform: rotate(25deg); animation: ray-pulse 4s ease-in-out infinite; }
+  .ray-2 { width: 2px; height: 340px; top: 22%; right: 35%; transform: rotate(20deg); animation: ray-pulse 5s ease-in-out infinite 0.5s; }
+  .ray-3 { width: 2px; height: 360px; top: 20%; right: 18%; transform: rotate(35deg); animation: ray-pulse 6s ease-in-out infinite 1s; }
+
+  @keyframes ray-pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+  }
+
+  /* Пылинки в лучах */
+  .dust {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: var(--cream);
+    border-radius: 50%;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .dust-1 { top: 35%; right: 30%; animation: dust-float 8s ease-in-out infinite; }
+  .dust-2 { top: 45%; right: 25%; animation: dust-float 11s ease-in-out infinite 2s; }
+  .dust-3 { top: 50%; right: 40%; animation: dust-float 9s ease-in-out infinite 4s; }
+  .dust-4 { top: 40%; right: 45%; animation: dust-float 13s ease-in-out infinite 1s; }
+
+  @keyframes dust-float {
+    0%, 100% { transform: translate(0, 0); opacity: 0.3; }
+    25% { transform: translate(10px, -15px); opacity: 0.8; }
+    50% { transform: translate(-5px, -30px); opacity: 0.5; }
+    75% { transform: translate(8px, -45px); opacity: 0.7; }
+  }
+
+  .hero-badge {
+    position: absolute;
+    right: 2rem;
+    bottom: 2rem;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 1rem 1.3rem;
+    border-radius: 999px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    z-index: 4;
+    transform: rotate(-2deg);
+  }
+
+  .hero-badge .dot {
+    width: 8px; height: 8px;
+    background: var(--terracotta);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  /* ======= ТИКЕР ======= */
+  .ticker {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 1.1rem 0;
+    overflow: hidden;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    position: relative;
+    z-index: 5;
+  }
+
+  .ticker-track {
+    display: flex;
+    gap: 3rem;
+    animation: scroll 40s linear infinite;
+    white-space: nowrap;
+    width: max-content;
+  }
+
+  .ticker-item {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .ticker-item::after {
+    content: '✦';
+    color: var(--ochre);
+    font-size: 1rem;
+    font-style: normal;
+  }
+
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ======= КАТАЛОГ ======= */
+  .catalog {
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3.5rem;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    max-width: 700px;
+  }
+
+  .section-title .italic { font-style: italic; color: var(--moss); font-weight: 300; }
+
+  .section-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 1rem;
+  }
+
+  .filters {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-self: flex-start;
+  }
+
+  .filter {
+    padding: 0.55rem 1.1rem;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .filter.active, .filter:hover {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s;
+    position: relative;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px -15px rgba(26, 36, 25, 0.25);
+  }
+
+  .card-visual {
+    aspect-ratio: 1;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--ink);
+    background: var(--cream-deep);
+  }
+
+  .card-visual svg { width: 100%; height: 100%; display: block; }
+
+  .card-tag {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--cream);
+    border: 1px solid var(--ink);
+    padding: 0.3rem 0.7rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    z-index: 2;
+  }
+
+  .card-tag.rare { background: var(--terracotta); color: var(--cream); border-color: var(--terracotta); }
+  .card-tag.easy { background: var(--ochre); color: var(--ink); border-color: var(--ochre); }
+  .card-tag.print { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+  .card-num {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink);
+    opacity: 0.5;
+  }
+
+  .card-body {
+    padding: 1.3rem 1.4rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    flex: 1;
+  }
+
+  .card-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .card-latin {
+    font-style: italic;
+    color: var(--sage);
+    font-size: 0.95rem;
+    margin-top: -0.3rem;
+  }
+
+  .card-specs {
+    display: flex;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-top: 1px solid rgba(26,36,25,0.15);
+    border-bottom: 1px solid rgba(26,36,25,0.15);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--moss);
+    flex-wrap: wrap;
+  }
+
+  .card-specs span {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 0.3rem;
+  }
+
+  .card-price {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .card-price .cur { font-size: 0.9rem; color: var(--sage); font-weight: 400; margin-left: 0.2em; }
+
+  .add-btn {
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: all 0.3s;
+  }
+
+  .add-btn:hover {
+    background: var(--moss);
+    transform: rotate(90deg) scale(1.1);
+  }
+
+  .add-btn.added {
+    background: var(--terracotta);
+    transform: scale(1.15);
+  }
+
+  .add-btn svg { width: 18px; height: 18px; }
+
+  /* ======= 3D КАШПО — выделенный блок ======= */
+  .studio {
+    padding: 6rem 2rem;
+    background: var(--paper);
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .studio::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--ink) 0,
+      var(--ink) 8px,
+      transparent 8px,
+      transparent 16px
+    );
+    opacity: 0.3;
+  }
+
+  .studio-top {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+    align-items: end;
+  }
+
+  .studio-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+
+  .studio-title .italic { font-style: italic; color: var(--terracotta); font-weight: 300; }
+  .studio-title .layers {
+    display: inline-block;
+    position: relative;
+  }
+  .studio-title .layers::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.05em;
+    height: 4px;
+    background: repeating-linear-gradient(
+      0deg,
+      var(--ochre) 0,
+      var(--ochre) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  }
+
+  .studio-desc {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #3a4238;
+  }
+
+  .studio-desc strong {
+    font-weight: 500;
+    font-style: italic;
+    color: var(--moss);
+  }
+
+  /* Печатаемые кашпо — сетка */
+  .print-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.8rem;
+  }
+
+  .print-card {
+    background: var(--cream);
+    border: 1px solid var(--ink);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+  }
+
+  .print-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px -15px rgba(26, 36, 25, 0.2);
+  }
+
+  .print-visual {
+    aspect-ratio: 1;
+    background: var(--cream-deep);
+    border: 1px solid rgba(26,36,25,0.15);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+
+  .print-visual svg { width: 85%; height: 85%; }
+
+  /* Тонкие горизонтальные линии — намёк на слои печати */
+  .print-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 3px,
+      rgba(26,36,25,0.04) 3px,
+      rgba(26,36,25,0.04) 4px
+    );
+    pointer-events: none;
+  }
+
+  .print-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .print-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .print-name .italic { font-style: italic; color: var(--moss); }
+
+  .print-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sage);
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .print-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(26,36,25,0.15);
+    margin-top: auto;
+  }
+
+  .print-price {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+  }
+
+  .print-price .cur { font-size: 0.85rem; color: var(--sage); font-weight: 400; }
+
+  .mini-btn {
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    padding: 0.55rem 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .mini-btn:hover { background: var(--terracotta); }
+
+  /* Услуги студии — краткие строки */
+  .studio-services {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(26,36,25,0.2);
+  }
+
+  .service-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .service-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--terracotta);
+  }
+
+  .service-item h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .service-item p {
+    font-size: 0.9rem;
+    color: #3a4238;
+    line-height: 1.5;
+  }
+
+  /* ======= ЗАБОТА ======= */
+  .care {
+    padding: 6rem 2rem;
+    background: var(--ink);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .care::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--moss), transparent 70%);
+    opacity: 0.4;
+  }
+
+  .care-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .care .section-sub { color: var(--ochre); }
+
+  .care-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 4rem;
+    max-width: 800px;
+  }
+
+  .care-title .hl { color: var(--ochre); font-style: italic; }
+
+  .care-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2.5rem;
+  }
+
+  .care-item {
+    border-top: 1px solid rgba(243,239,229,0.2);
+    padding-top: 1.5rem;
+  }
+
+  .care-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--ochre);
+    margin-bottom: 1rem;
+  }
+
+  .care-item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 0.8rem;
+  }
+
+  .care-item h3 .italic { font-style: italic; color: var(--ochre); }
+
+  .care-item p {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: rgba(243,239,229,0.75);
+  }
+
+  /* ======= ПОДПИСКА ======= */
+  .subscribe {
+    padding: 6rem 2rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .sub-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .sub-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  .sub-title .italic { font-style: italic; color: var(--moss); font-weight: 300; }
+
+  .sub-desc {
+    font-size: 1.05rem;
+    color: #3a4238;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+  }
+
+  .sub-form {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 480px;
+    margin: 0 auto;
+    border: 1px solid var(--ink);
+    padding: 0.4rem;
+    border-radius: 999px;
+    background: var(--paper);
+  }
+
+  .sub-form input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 0.9rem 1.2rem;
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    color: var(--ink);
+    outline: none;
+  }
+
+  .sub-form input::placeholder { color: var(--sage); font-style: italic; }
+
+  .sub-form button {
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    padding: 0.8rem 1.6rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .sub-form button:hover { background: var(--moss); }
+
+  /* ======= ФУТЕР ======= */
+  footer {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 4rem 2rem 2rem;
+    border-top: 1px solid var(--ink);
+    position: relative;
+    z-index: 2;
+  }
+
+  .foot-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    max-width: 1400px;
+    margin: 0 auto 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(243,239,229,0.15);
+  }
+
+  .foot-brand h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .foot-brand h3 .italic {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ochre);
+  }
+
+  .foot-brand p {
+    color: rgba(243,239,229,0.7);
+    max-width: 340px;
+    line-height: 1.6;
+  }
+
+  .foot-col h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ochre);
+    margin-bottom: 1.2rem;
+  }
+
+  .foot-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .foot-col a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+  }
+
+  .foot-col a:hover { color: var(--ochre); }
+
+  .foot-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(243,239,229,0.6);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* ======= АДАПТИВ ======= */
+  @media (max-width: 900px) {
+    nav ul { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 2rem; }
+    .hero-visual { height: 460px; order: -1; }
+    .window-frame { width: 320px; height: 400px; }
+    .sun { width: 100px; height: 100px; }
+    .plant-leaves { width: 200px; height: 230px; }
+    .pl-1 { width: 85px; }
+    .pl-2 { width: 100px; left: 60px; }
+    .pl-3 { width: 75px; left: 105px; }
+    .pl-4 { width: 65px; }
+    .pl-5 { width: 60px; left: 130px; }
+    .sill-pot { width: 130px; height: 110px; }
+    .hero-meta { display: none; }
+    .foot-top { grid-template-columns: 1fr 1fr; }
+    .studio-top { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  @media (max-width: 560px) {
+    header { padding: 0.8rem 1.2rem; }
+    .hero, .catalog, .care, .subscribe, .studio { padding-left: 1.2rem; padding-right: 1.2rem; }
+    .foot-top { grid-template-columns: 1fr; gap: 2rem; padding-bottom: 2rem; }
+    footer { padding: 3rem 1.2rem 2rem; }
+    .sub-form { flex-direction: column; border-radius: 24px; padding: 0.5rem; }
+    .sub-form button { width: 100%; padding: 1rem; }
+    .hero-badge { right: 1rem; bottom: 1rem; font-size: 0.65rem; padding: 0.7rem 1rem; }
+    .logo { font-size: 1.2rem; }
+  }
+
+  /* ======= УВЕДОМЛЕНИЕ ======= */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(150%);
+    background: var(--ink);
+    color: var(--cream);
+    padding: 1rem 1.8rem;
+    border-radius: 999px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    z-index: 200;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast .check { color: var(--ochre); font-size: 1.2rem; }
+
+  /* Анимация появления при скролле */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
