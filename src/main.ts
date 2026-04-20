@@ -1,11 +1,14 @@
 import './styles/main.css';
-import { renderPlants, renderPots } from './lib/render';
+import { renderPlants, renderPots, renderSocialLinks } from './lib/render';
 import { observeFadeIns } from './lib/observer';
-import { addToCart } from './lib/cart';
+import { addToCart, updateBadge } from './lib/cart';
 import { showToast } from './lib/toast';
+import { loadCatalog, type ResolvedCatalog } from './lib/catalog';
 import type { PlantCategory } from './data/plants';
 
 type Filter = PlantCategory | 'all';
+
+let currentCatalog: ResolvedCatalog | null = null;
 
 function wireFilters(): void {
   const filters = document.querySelectorAll<HTMLButtonElement>('.filter');
@@ -13,7 +16,9 @@ function wireFilters(): void {
     btn.addEventListener('click', () => {
       filters.forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
-      renderPlants((btn.dataset.filter as Filter) ?? 'all');
+      if (currentCatalog) {
+        renderPlants(currentCatalog, (btn.dataset.filter as Filter) ?? 'all');
+      }
     });
   });
 }
@@ -24,9 +29,12 @@ function wireCartDelegation(): void {
     if (!target) return;
     const btn = target.closest<HTMLButtonElement>('.add-btn, .mini-btn');
     if (!btn) return;
+    if (btn.disabled) return;
     const name = btn.dataset.name;
+    const productId = btn.dataset.id || null;
+    const priceRub = Number(btn.dataset.price ?? 0);
     if (!name) return;
-    addToCart(btn, name);
+    addToCart(btn, name, { productId, priceRub });
   });
 }
 
@@ -49,10 +57,28 @@ function wireSubscribeForm(): void {
   });
 }
 
-renderPlants();
-renderPots();
-observeFadeIns();
+function wireCartBtn(): void {
+  const cartBtn = document.querySelector<HTMLAnchorElement | HTMLButtonElement>(
+    '[data-cart-link]'
+  );
+  cartBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = '/checkout.html';
+  });
+}
+
+async function init(): Promise<void> {
+  currentCatalog = await loadCatalog();
+  renderPlants(currentCatalog);
+  renderPots(currentCatalog);
+  renderSocialLinks(currentCatalog.social);
+  observeFadeIns();
+  updateBadge();
+}
+
 wireFilters();
 wireCartDelegation();
 wireHeroCta();
 wireSubscribeForm();
+wireCartBtn();
+void init();

@@ -46,9 +46,9 @@
       <li><a href="#about">О нас</a></li>
     </ul>
   </nav>
-  <button class="cart-btn">
+  <a class="cart-btn" href="/checkout.html" data-cart-link>
     Корзина <span class="cart-count" id="cartCount">0</span>
-  </button>
+  </a>
 </header>
 
 <!-- ГЕРОЙ -->
@@ -534,16 +534,13 @@
     </div>
     <div class="foot-col">
       <h4>Следить</h4>
-      <ul>
-        <li><a href="#">Telegram</a></li>
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">Pinterest</a></li>
-        <li><a href="#">YouTube</a></li>
+      <ul data-social-list>
+        <li><a href="https://t.me/summeroom" rel="noopener">Telegram</a></li>
       </ul>
     </div>
   </div>
   <div class="foot-bottom">
-    <span>© 2026 Комната лета · все права защищены</span>
+    <span>© 2026 Комната лета · <a href="/privacy.html">политика конфиденциальности</a> · <a href="/offer.html">оферта</a></span>
     <span>Растём · Печатаем · Дышим</span>
   </div>
 </footer>
