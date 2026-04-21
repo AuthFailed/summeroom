@@ -1,7 +1,7 @@
 import type { Plant } from '../data/plants';
 import type { Pot } from '../data/pots';
 
-const FALLBACK_BASE = 'https://api.summeroom.ru';
+const FALLBACK_BASE = '';
 const API_BASE = (import.meta.env.VITE_API_BASE_URL ?? FALLBACK_BASE).replace(/\/$/, '');
 
 export interface ApiImage {
