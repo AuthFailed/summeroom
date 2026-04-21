@@ -1,7 +1,9 @@
-import { plants, type PlantCategory } from '../data/plants';
-import { pots } from '../data/pots';
+import type { PlantCategory } from '../data/plants';
 import { createLeafSVG, createPotSVG } from './svg';
 import { observeFadeIns } from './observer';
+import type { ResolvedCatalog, ResolvedProduct } from './catalog';
+import type { Plant } from '../data/plants';
+import type { Pot } from '../data/pots';
 
 type Filter = PlantCategory | 'all';
 
@@ -14,22 +16,33 @@ const PLUS_ICON = `
 
 const priceFormatter = new Intl.NumberFormat('ru-RU');
 
-export function renderPlants(filter: Filter = 'all'): void {
+function visualFor(p: ResolvedProduct<Plant | Pot>, fallbackSvg: string): string {
+  if (p.primaryImageUrl) {
+    return `<img class="card-photo" src="${p.primaryImageUrl}" alt="" loading="lazy" />`;
+  }
+  return fallbackSvg;
+}
+
+export function renderPlants(catalog: ResolvedCatalog, filter: Filter = 'all'): void {
   const grid = document.getElementById('productGrid');
   if (!grid) return;
 
-  const filtered = filter === 'all' ? plants : plants.filter((p) => p.category === filter);
+  const all = catalog.plants;
+  const filtered = filter === 'all' ? all : all.filter((p) => p.data.category === filter);
 
   grid.innerHTML = filtered
-    .map((p, i) => {
+    .map((rp, i) => {
+      const p = rp.data;
       const tagClass = p.category === 'rare' ? 'rare' : p.category === 'easy' ? 'easy' : '';
       const num = String(i + 1).padStart(2, '0');
+      const pid = rp.id ?? '';
+      const stockAttr = rp.stock > 0 ? '' : 'disabled';
       return `
         <article class="card fade-in">
           <div class="card-visual">
             <span class="card-tag ${tagClass}">${p.tag}</span>
             <span class="card-num">№ ${num}</span>
-            ${createLeafSVG(p)}
+            ${visualFor(rp, createLeafSVG(p))}
           </div>
           <div class="card-body">
             <div>
@@ -43,7 +56,7 @@ export function renderPlants(filter: Filter = 'all'): void {
             </div>
             <div class="card-footer">
               <div class="card-price">${priceFormatter.format(p.price)}<span class="cur"> ₽</span></div>
-              <button class="add-btn" data-name="${p.name}" aria-label="Добавить в корзину">
+              <button class="add-btn" ${stockAttr} data-name="${p.name}" data-id="${pid}" data-price="${p.price}" aria-label="Добавить в корзину">
                 ${PLUS_ICON}
               </button>
             </div>
@@ -56,16 +69,18 @@ export function renderPlants(filter: Filter = 'all'): void {
   observeFadeIns();
 }
 
-export function renderPots(): void {
+export function renderPots(catalog: ResolvedCatalog): void {
   const grid = document.querySelector<HTMLElement>('.print-grid');
   if (!grid) return;
 
-  grid.innerHTML = pots
-    .map(
-      (p) => `
+  grid.innerHTML = catalog.pots
+    .map((rp) => {
+      const p = rp.data;
+      const pid = rp.id ?? '';
+      return `
       <article class="print-card fade-in">
         <div class="print-visual">
-          ${createPotSVG(p)}
+          ${visualFor(rp, createPotSVG(p))}
         </div>
         <div class="print-code">
           <span>№ ${p.code}</span>
@@ -79,12 +94,34 @@ export function renderPots(): void {
         </div>
         <div class="print-bottom">
           <div class="print-price">${priceFormatter.format(p.price)}<span class="cur"> ₽</span></div>
-          <button class="mini-btn" data-name="Кашпо ${p.name}">Заказать</button>
+          <button class="mini-btn" data-name="Кашпо ${p.name}" data-id="${pid}" data-price="${p.price}">Заказать</button>
         </div>
       </article>
-    `,
-    )
+    `;
+    })
     .join('');
 
   observeFadeIns();
+}
+
+export function renderSocialLinks(social: ResolvedCatalog['social']): void {
+  const mapping: Record<string, string> = {
+    telegram: 'Telegram',
+    instagram: 'Instagram',
+    pinterest: 'Pinterest',
+    youtube: 'YouTube',
+    vk: 'VK',
+  };
+  const container = document.querySelector<HTMLElement>('[data-social-list]');
+  if (!container) return;
+  const entries = Object.entries(mapping).filter(
+    ([key]) => typeof (social as Record<string, unknown>)[key] === 'string'
+  );
+  if (entries.length === 0) return;
+  container.innerHTML = entries
+    .map(([key, label]) => {
+      const url = (social as Record<string, string>)[key];
+      return `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${label}</a></li>`;
+    })
+    .join('');
 }

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Оформление заказа · Комната лета</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href="https://summeroom.ru/checkout" />
+    <meta name="robots" content="noindex" />
+  </head>
+  <body class="page">
+    <header class="site-header">
+      <div class="logo"><a href="/">Комната <span class="italic">лета</span>.</a></div>
+    </header>
+
+    <main class="checkout">
+      <h1>Оформление заказа</h1>
+
+      <section class="card" id="cartSummary">
+        <h2>Ваш заказ</h2>
+        <div id="cartEmpty" hidden>
+          <p class="muted">Корзина пуста.</p>
+          <a href="/" class="btn-primary">Вернуться в каталог</a>
+        </div>
+        <table id="cartTable" class="cart-table" hidden>
+          <thead>
+            <tr><th>Товар</th><th>Цена</th><th>Кол-во</th><th>Итого</th><th></th></tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3"><strong>К оплате</strong></td>
+              <td colspan="2"><strong id="cartTotal">0 ₽</strong></td>
+            </tr>
+          </tfoot>
+        </table>
+      </section>
+
+      <form id="checkoutForm" class="card form" novalidate hidden>
+        <h2>Контакты и доставка</h2>
+        <label>
+          Имя
+          <input name="name" required autocomplete="name" />
+        </label>
+        <label>
+          Телефон
+          <input name="phone" required inputmode="tel" autocomplete="tel" placeholder="+7 999 000-00-00" />
+        </label>
+        <label>
+          Email
+          <input name="email" type="email" required autocomplete="email" />
+        </label>
+        <label>
+          Адрес доставки
+          <input name="address" autocomplete="street-address" placeholder="Город, улица, дом, квартира" />
+        </label>
+        <label>
+          Комментарий к заказу
+          <textarea name="comment" rows="2"></textarea>
+        </label>
+
+        <!-- honeypot: hidden from humans, filled only by bots -->
+        <div class="hp" aria-hidden="true">
+          <label>Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+        </div>
+
+        <label class="checkbox">
+          <input type="checkbox" name="consent" required />
+          Согласен на обработку <a href="/privacy.html">персональных данных</a> и&nbsp;принимаю <a href="/offer.html">публичную оферту</a>
+        </label>
+
+        <div id="checkoutError" class="error" hidden></div>
+
+        <button type="submit" class="btn-primary" id="payBtn">Оплатить через ЮKassa</button>
+        <p class="muted small">
+          После нажатия вы перейдёте на защищённую страницу ЮKassa для оплаты картой или через СБП.
+          Фискальный чек по 54-ФЗ будет отправлен на ваш email.
+        </p>
+      </form>
+    </main>
+
+    <script type="module" src="/src/checkout.ts"></script>
+  </body>
+</html>
